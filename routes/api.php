@@ -13,11 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-// Auth::routes();
 
 Route::post('auth', 'UserController@login');
 Route::post('reg', 'UserController@reg');
@@ -40,6 +35,9 @@ Route::group(['middleware' => ['auth:api']], function(){
 
   Route::resource('posts', 'PostController',
                   ['only' => ['create', 'store', 'update', 'destroy']]);
+
+  Route::get('/myPosts', 'PostController@myPosts');
+  
 
   Route::resource('comments', 'CommentController',
                   ['only' => ['create', 'store', 'update', 'destroy']]);

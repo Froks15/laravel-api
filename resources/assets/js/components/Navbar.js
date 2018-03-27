@@ -17,7 +17,9 @@ export default class Navbar extends Component {
                     <span className="icon-bar"></span>
                     <span className="icon-bar"></span>
                 </button>
-                <a className="navbar-brand" href="/">React blog</a>
+                <Link to="/" className="navbar-brand">
+                    React blog
+                </Link>
                 </div>
 
                 <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -27,21 +29,20 @@ export default class Navbar extends Component {
                             Home
                         </NavLink>
                     </li>
-                    <li>
-                        <NavLink exact to="/posts">
-                            Posts
-                        </NavLink>
-                    </li>
                     <li className="dropdown">
-                    <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span className="caret"></span></a>
+                    <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Posts <span className="caret"></span></a>
                     <ul className="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
+                        <li>
+                            <Link to="/posts">All posts</Link>
+                        </li>
+                        <li>
+                            <Link to="/me/posts">My posts</Link>
+                        </li>
+                        <li>
+                            <Link to="/posts/create">Create</Link>
+                        </li>
+
                         <li role="separator" className="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                        <li role="separator" className="divider"></li>
-                        <li><a href="#">One more separated link</a></li>
                     </ul>
                     </li>
                 </ul>

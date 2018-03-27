@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class PostController extends Controller
 {
@@ -15,8 +17,13 @@ class PostController extends Controller
     public function index()
     {
         //
-        return response()->json(['posts'=>Post::select('id', 'title', 'text')->paginate(2)]);
-        //return Post::select('id', 'title', 'text')->paginate(1);
+        return response()->json(['posts'=>Post::select('id', 'title', 'text')->paginate(10)]);
+    }
+
+    public function myPosts()
+    {
+        $id = Auth::id();
+        return response()->json(['posts'=>Post::select('id', 'title', 'text')->where('user_id', $id)->paginate(10)]);
     }
 
     /**
@@ -57,7 +64,8 @@ class PostController extends Controller
     public function show(Post $post)
     {
         //
-        return $post;    
+        $comments = $post->comments;
+        return $post;
     }
 
     /**

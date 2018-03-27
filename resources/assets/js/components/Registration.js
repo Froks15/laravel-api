@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withRouter  } from 'react-router-dom'
-import Navbar from './Navbar';
 
 export default class Registration extends Component {
 
@@ -40,7 +39,6 @@ export default class Registration extends Component {
     render() {
         return (
             <div>
-            <Navbar />
             <form onSubmit={this.handleSubmit}>
                 <h3>Register form</h3>
 

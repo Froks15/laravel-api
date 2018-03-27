@@ -6,6 +6,8 @@
     use Illuminate\Support\Facades\Auth;
     use App\User;
     use Response;
+    use Illuminate\Support\Facades\DB;
+
 
     class UserController extends Controller
     {
@@ -15,11 +17,12 @@
     }
     public function login()
     {
+        
         if(Auth::attempt(['email' => request('email'), 'password' => request('password')]))
         {
             $user = Auth::user();
             $this->content['user'] = $user;
-            $this->content['token'] =  $user->createToken('Pizza App')->accessToken;
+            $this->content['token'] =  $user->createToken('App')->accessToken;
             $status = 200;
         }
         else
@@ -27,10 +30,11 @@
             $this->content['error'] = "Bad pass or login";
             $status = 401;
         }
+            
         return response()->json($this->content, $status);    
     }
 
-    public function logout(){
+    public function logout(Request $request){
         Auth::logout();
         return response()->json(['message' => 'success']);
     }
@@ -49,6 +53,6 @@
 
     public function details()
     {
-        return response()->json(['user'=>Auth::User()]);
+        return response()->json(['user'=>Auth::User()])->header('Accept', 'application/json');
     }
  }

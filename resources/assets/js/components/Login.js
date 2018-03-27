@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import {Redirect} from 'react-router-dom';
-import Navbar from './Navbar';
 
 
 export default class Login extends Component {
@@ -53,7 +52,6 @@ export default class Login extends Component {
     render(){
         return (
             <div>
-                <Navbar />
                 <form onSubmit={this.submit}>
                     <input value={this.state.user.email} onChange={(e)=>this.handleInput('email',e)} type="email" placeholder="email"></input> <br/>
                     <input value={this.state.user.password} onChange={(e)=>this.handleInput('password',e)} type="password" placeholder="password"></input> <br/>

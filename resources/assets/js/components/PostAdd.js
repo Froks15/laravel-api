@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import {Redirect} from 'react-router-dom';
-import Navbar from './Navbar';
-
 
 export default class PostAdd extends Component {
     constructor(props){
@@ -27,7 +25,6 @@ export default class PostAdd extends Component {
             user_id: localStorage.getItem('id'),
             category_id: this.state.newPost.category_id,
         })
-        console.log(data);
         axios.post(`/api/posts`, data, {
             headers: {
                 'Content-Type': 'application/json',
@@ -36,7 +33,7 @@ export default class PostAdd extends Component {
             }
         })
         .then(res => {
-            this.props.history.push(`/posts`);
+            this.props.history.push(`/me/posts`);
         })
     }
 
@@ -49,7 +46,6 @@ export default class PostAdd extends Component {
     render(){
         return (
             <div>
-                <Navbar />
                 <form onSubmit={this.submit}>
                     <input placeholder="title" value={this.state.newPost.title} onChange={(e)=>this.handleInput('title',e)}></input> <br/>
                     <input placeholder="text" value={this.state.newPost.text} onChange={(e)=>this.handleInput('text',e)}></input> <br/>

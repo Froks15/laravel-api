@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 
 
 
-export default class PostAll extends Component {
+export default class MyPostAll extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -14,7 +14,7 @@ export default class PostAll extends Component {
 
     componentDidMount(){
         let self = this;
-        axios.get('/api/posts')
+        axios.get('/api/myPosts', { headers: {Authorization: 'Bearer ' + localStorage.getItem("token")}})
             .then(function(data) {
                 self.setState({
                     posts: data.data.posts.data,
