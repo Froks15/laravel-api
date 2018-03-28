@@ -31,7 +31,9 @@ Route::resource('categories', 'CategoryController',
 
 Route::group(['middleware' => ['auth:api']], function(){
 
-  Route::get('/user', 'UserController@details');
+  Route::get('/users', 'UserController@details');
+
+  Route::get('/isAdmin', 'UserController@isAdmin');
 
   Route::resource('posts', 'PostController',
                   ['only' => ['create', 'store', 'update', 'destroy']]);

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -15,7 +17,7 @@ class CategoryController extends Controller
     public function index()
     {
         //
-        return Category::all();
+        return response()->json(['categories'=>Category::select('id', 'name')->paginate(10)]);
     }
 
     /**
@@ -37,11 +39,16 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
-        $category = new Category;
-        $category->name = $request->name;
-        $category->save();
 
-        return $category;
+        if(Auth::user()->role == 'admin'){
+            $category = new Category;
+            $category->name = $request->name;
+            $category->save();
+            return $category;
+        }else {
+            return 'not admin';
+        }
+
     }
 
     /**
@@ -53,6 +60,8 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         //
+        $category->posts;
+        return $category;
     }
 
     /**
@@ -76,10 +85,13 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         //
-        $category->name = $request->name;
-        $category->save();
-
-        return $category;
+        if(Auth::user()->role == 'admin'){
+            $category->name = $request->name;
+            $category->save();
+            return $category;
+        }else {
+            return 'not admin';
+        }
     }
 
     /**
@@ -91,7 +103,12 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
-        $category->delete();
-        return $category . ' deleted';
+        if(Auth::user()->role == 'admin'){
+            $category->delete();
+            return $category . ' deleted';
+        }else {
+            return 'not admin';
+        }
+        
     }
 }

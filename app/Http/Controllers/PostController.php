@@ -64,7 +64,10 @@ class PostController extends Controller
     public function show(Post $post)
     {
         //
-        $comments = $post->comments;
+        
+        $post->category;
+        $post->user;
+        $post->comments;
         return $post;
     }
 

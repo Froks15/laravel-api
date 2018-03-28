@@ -13,10 +13,10 @@ export default class PostShow extends Component {
             text: '',
             deleted: false,
             comments: [],
+            category: '',
             newComment: {
                 text: '',           
             },
-            test: false
         }
         this.postRemove = this.postRemove.bind(this);
         this.addComment = this.addComment.bind(this);
@@ -40,6 +40,7 @@ export default class PostShow extends Component {
                     text: data.data.text,
                     user_id: data.data.user_id,
                     comments: data.data.comments,
+                    category: data.data.category.name,
                 })
             });
     }
@@ -100,7 +101,7 @@ export default class PostShow extends Component {
 
 
     render(){
-        const { id, title, text, user_id, deleted, comments } = this.state;
+        const { id, title, text, user_id, deleted, comments, category } = this.state;
         const editPost = user_id == localStorage.getItem('id') ? <Link to={"/posts/"+id+"/edit"}>Edit</Link> : null;
         const removePost = user_id == localStorage.getItem('id') ? <a onClick={this.postRemove}>remove</a> : null;
         if(deleted){
@@ -109,7 +110,6 @@ export default class PostShow extends Component {
                     Post success deleted!
                 </div>
             )
-            
         }else {
             return (
                 <div>
@@ -117,6 +117,9 @@ export default class PostShow extends Component {
                         <div className="panel-heading">{title}</div>
                         <div className="panel-body">
                             {text}
+                        </div>
+                        <div className="panel-body">
+                            <p>Category: {category}</p>
                         </div>
                         <div className="panel-body">
                         {editPost} <br/>
@@ -139,7 +142,9 @@ export default class PostShow extends Component {
                         <div key={index}>
                             <div className="panel panel-default">
                                 <div className="panel-body">
-                                    { value.user_id } <br/>
+                                    <Link to={"/users/"+value.user.id}>
+                                    { value.user.name }
+                                    </Link> <br/>
                                     { value.text } <br/>
                                     { localStorage.getItem('id') == value.user_id ? <button onClick={()=>{this.delComment(value.id)}}>delete</button> : null }
                                 </div>

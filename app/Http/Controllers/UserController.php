@@ -51,6 +51,12 @@
   
     }
 
+    public function isAdmin(Request $request)
+    {
+        return Auth::user()->role;
+        return response()->json(['role'=>Auth::user()->role])->header('Accept', 'application/json');
+    }
+
     public function details()
     {
         return response()->json(['user'=>Auth::User()])->header('Accept', 'application/json');
