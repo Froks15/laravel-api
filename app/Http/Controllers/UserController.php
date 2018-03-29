@@ -41,6 +41,14 @@
 
     public function reg(Request $request)
     {
+
+        $request->validate([
+            'name' => 'required|min:6|max:50',
+            'email' => 'required|min:5|email',
+            'user_id' => 'required',
+            'category_id' => 'required',
+        ]);
+
         $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;
@@ -53,12 +61,17 @@
 
     public function isAdmin(Request $request)
     {
-        return Auth::user()->role;
         return response()->json(['role'=>Auth::user()->role])->header('Accept', 'application/json');
     }
 
     public function details()
     {
         return response()->json(['user'=>Auth::User()])->header('Accept', 'application/json');
+    }
+
+    public function show(Request $request)
+    {
+        $user = User::findOrFail($request->id);
+        return response()->json(['user'=>$user])->header('Accept', 'application/json');
     }
  }

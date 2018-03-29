@@ -5,22 +5,36 @@ export default class UserShow extends Component {
     constructor(props){
         super(props);
         this.state = {
-            data: null,
+            user: {
+                name: '',
+                email: '',
+            },
         }
     }
 
     componentDidMount(){
         let self = this;
-        axios.get('/api/users', { headers: {Authorization: 'Bearer ' + localStorage.getItem("token")}})
+        let id = this.props.match.params.id;
+        axios.get('/api/users/' + id, { headers: {Authorization: 'Bearer ' + localStorage.getItem("token")}})
             .then(function(data) {
-                self.setState({data})
+                self.setState({
+                   user: {
+                        name: data.data.user.name,
+                        email: data.data.user.email,
+                   }
+                })
             });
     }
 
     render(){
-        const { data } = this.state
+        const { user } = this.state
         return (
-            (data ? <h1>{data.data.user.name}</h1>:"")
+            (user ? 
+            <div>
+                <h1>{user.name}</h1>
+                <p>{user.email}</p>
+            </div>
+            :"")
         )
     }
 }

@@ -29,7 +29,7 @@ export default class CategoriesAll extends Component {
         axios.get('/api/categories')
             .then(function(data) {
                 self.setState({
-                    categories: data.data.categories.data,
+                    categories: data.data,
                 })
             }).catch(err => {
                 console.log(err)
@@ -46,7 +46,7 @@ export default class CategoriesAll extends Component {
             }
         })
         .then(res => {
-            this.setState({role: res.data})
+            this.setState({role: res.data.role})
         })
     }
 
@@ -58,7 +58,7 @@ export default class CategoriesAll extends Component {
         return (
             <div>
                 <h1>categories list:</h1>
-                {categories.map((value, index) => {
+                {categories ? categories.map((value, index) => {
                     return (
                         <div key={index}>
                             <div className="panel panel-default">
@@ -71,7 +71,7 @@ export default class CategoriesAll extends Component {
                             </div>
                         </div>
                     )
-                })}
+                }) : null}
                 
             </div>
         )

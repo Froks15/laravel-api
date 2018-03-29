@@ -7,7 +7,7 @@ export default class Navbar_auth extends Component {
     constructor(props){
         super(props);
         this.state = {
-            role: 'user'
+            role: 'user',
         }
     }
 
@@ -27,8 +27,8 @@ export default class Navbar_auth extends Component {
             }
         })
         .then(res => {
-            this.setState({role: res.data})
-        })
+            this.setState({role: res.data.role})
+        });
     }
 
     render() {
@@ -54,7 +54,11 @@ export default class Navbar_auth extends Component {
                     <li className="dropdown">
                         <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{name} <span className="caret"></span></a>
                         <ul className="dropdown-menu">
-                            <li><a href="#">My profile</a></li>
+                            <li>
+                                <Link to={"/users/"+localStorage.getItem('id')}>
+                                    My profile
+                                </Link>
+                            </li>
                             <li role="separator" className="divider"></li>
                             <li>
                                 <Link to="/" onClick={this.logout}>

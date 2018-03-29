@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 */
 
 
+
 Route::post('auth', 'UserController@login');
 Route::post('reg', 'UserController@reg');
 Route::get('logout', 'UserController@logout');
@@ -31,15 +32,14 @@ Route::resource('categories', 'CategoryController',
 
 Route::group(['middleware' => ['auth:api']], function(){
 
-  Route::get('/users', 'UserController@details');
-
+  Route::get('/myProfile', 'UserController@details');
+  Route::get('/users/{id}', 'UserController@show');
   Route::get('/isAdmin', 'UserController@isAdmin');
 
   Route::resource('posts', 'PostController',
                   ['only' => ['create', 'store', 'update', 'destroy']]);
 
   Route::get('/myPosts', 'PostController@myPosts');
-  
 
   Route::resource('comments', 'CommentController',
                   ['only' => ['create', 'store', 'update', 'destroy']]);
@@ -47,3 +47,6 @@ Route::group(['middleware' => ['auth:api']], function(){
   Route::resource('categories', 'CategoryController',
                   ['only' => ['create', 'store', 'update', 'destroy']]);
 });
+
+
+

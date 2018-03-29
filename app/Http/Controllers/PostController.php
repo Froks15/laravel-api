@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +18,7 @@ class PostController extends Controller
     public function index()
     {
         //
-        return response()->json(['posts'=>Post::select('id', 'title', 'text')->paginate(10)]);
+        return response()->json(['posts'=>Post::select('id', 'title', 'text')->get()]);
     }
 
     public function myPosts()
@@ -45,6 +46,13 @@ class PostController extends Controller
     public function store(Request $request)
     {
         //
+
+        $request->validate([
+            'title' => 'required|min:10|max:255',
+            'text' => 'required|min:10',
+            'user_id' => 'required',
+        ]);
+
         $post = new Post;
         $post->title = $request->title;
         $post->text = $request->text;
@@ -63,8 +71,6 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
-        
         $post->category;
         $post->user;
         $post->comments;
@@ -92,6 +98,12 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         //
+        $request->validate([
+            'title' => 'required|min:10|max:255',
+            'text' => 'required|min:10',
+            'user_id' => 'required',
+        ]);
+
         $post->title = $request->title;
         $post->text = $request->text;
         $post->user_id = $request->user_id;

@@ -16,8 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
-        return response()->json(['categories'=>Category::select('id', 'name')->paginate(10)]);
+        return Category::all();
     }
 
     /**
@@ -39,6 +38,9 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'name' => 'required|min:3|max:50',
+        ]);
 
         if(Auth::user()->role == 'admin'){
             $category = new Category;
@@ -84,7 +86,11 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+
+        $request->validate([
+            'name' => 'required|min:3|max:50',
+        ]);
+        
         if(Auth::user()->role == 'admin'){
             $category->name = $request->name;
             $category->save();

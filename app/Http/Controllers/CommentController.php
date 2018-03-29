@@ -38,6 +38,13 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
+
+
+        $request->validate([
+            'text' => 'required|min:5|max:250',
+            'user_id' => 'required',
+            'post_id' => 'required',
+        ]);
         //
         $user_id = Auth::id(); 
         
@@ -83,6 +90,13 @@ class CommentController extends Controller
     public function update(Request $request, Comment $comment)
     {
         //
+
+        $request->validate([
+            'text' => 'required|min:5|max:250',
+            'user_id' => 'required',
+            'post_id' => 'required',
+        ]);
+
         $comment->text = $request->text;
         $comment->user_id = $request->user_id;
         $comment->category_id = $request->category_id;

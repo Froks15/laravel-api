@@ -16,11 +16,13 @@ export default class PostAll extends Component {
         let self = this;
         axios.get('/api/posts')
             .then(function(data) {
+                console.log(data)
                 self.setState({
-                    posts: data.data.posts.data,
+                    posts: data.data.posts,
                 })
             });
     }
+
 
 
     render(){
@@ -39,7 +41,6 @@ export default class PostAll extends Component {
                         </Link>
                     )
                 })}
-                
             </div>
         )
     }

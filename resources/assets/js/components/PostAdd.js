@@ -11,9 +11,20 @@ export default class PostAdd extends Component {
                 text: '',
                 category_id: '',  
             },
+            errors: [],
+            categories: [],
         }
         this.submit = this.submit.bind(this);
         this.handleInput = this.handleInput.bind(this);
+    }
+
+    componentDidMount() {
+        axios.get('/api/categories').then((response) => {
+            let categories = response.data;
+            this.setState({categories});              
+        }).catch((error) => {
+
+        })
     }
 
     submit(e){
@@ -34,6 +45,11 @@ export default class PostAdd extends Component {
         })
         .then(res => {
             this.props.history.push(`/me/posts`);
+        }).catch(err => {
+            console.log(err.response.data.errors)
+            this.setState({
+                errors: err.response.data.errors
+            })
         })
     }
 
@@ -44,12 +60,34 @@ export default class PostAdd extends Component {
     }
 
     render(){
+        const {categories} = this.state;
+        const { errors } = this.state
         return (
             <div>
+                <div>
+                {errors ? errors.map((value, index) => {
+                    return (
+                        <div key={index}>
+                            {index}
+                        </div>
+                    )
+                }): null}
+                </div>
                 <form onSubmit={this.submit}>
                     <input placeholder="title" value={this.state.newPost.title} onChange={(e)=>this.handleInput('title',e)}></input> <br/>
-                    <input placeholder="text" value={this.state.newPost.text} onChange={(e)=>this.handleInput('text',e)}></input> <br/>
-                    <input placeholder="category_id" value={this.state.newPost.category_id} onChange={(e)=>this.handleInput('category_id',e)}></input> <br/>
+                    <textarea placeholder="text" value={this.state.newPost.text} onChange={(e)=>this.handleInput('text',e)}></textarea> <br/>
+                    <div className='form-group'>
+                                                <label htmlFor="category">Category</label>
+                                                <select className="custom-select" id='category' onChange={(e)=>this.handleInput('category_id',e)}>
+                                                    {
+                                                        categories.map((value, index) => {
+                                                            return (
+                                                                <option value={value.id} key={value.id}>{value.name}</option>
+                                                            )
+                                                        })
+                                                    }
+                                                </select>
+                                            </div>
                     <input type="submit" value="Add Post" />
                 </form>
             </div>

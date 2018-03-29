@@ -13,7 +13,7 @@ export default class PostShow extends Component {
             text: '',
             deleted: false,
             comments: [],
-            category: '',
+            category: null,
             newComment: {
                 text: '',           
             },
@@ -40,7 +40,7 @@ export default class PostShow extends Component {
                     text: data.data.text,
                     user_id: data.data.user_id,
                     comments: data.data.comments,
-                    category: data.data.category.name,
+                    category: data.data.category !== null ? data.data.category.name : null,
                 })
             });
     }
@@ -103,7 +103,7 @@ export default class PostShow extends Component {
     render(){
         const { id, title, text, user_id, deleted, comments, category } = this.state;
         const editPost = user_id == localStorage.getItem('id') ? <Link to={"/posts/"+id+"/edit"}>Edit</Link> : null;
-        const removePost = user_id == localStorage.getItem('id') ? <a onClick={this.postRemove}>remove</a> : null;
+        const removePost = user_id == localStorage.getItem('id') ? <a onClick={this.postRemove}>Remove</a> : null;
         if(deleted){
             return (
                 <div>
@@ -118,9 +118,9 @@ export default class PostShow extends Component {
                         <div className="panel-body">
                             {text}
                         </div>
-                        <div className="panel-body">
+                        {category ? <div className="panel-body">
                             <p>Category: {category}</p>
-                        </div>
+                        </div> : null }
                         <div className="panel-body">
                         {editPost} <br/>
                         {removePost} <br/>
@@ -146,7 +146,7 @@ export default class PostShow extends Component {
                                     { value.user.name }
                                     </Link> <br/>
                                     { value.text } <br/>
-                                    { localStorage.getItem('id') == value.user_id ? <button onClick={()=>{this.delComment(value.id)}}>delete</button> : null }
+                                    { localStorage.getItem('id') == value.user_id ? <button className="btn btn-danger btn-xs" onClick={()=>{this.delComment(value.id)}}>delete</button> : null }
                                 </div>
                             </div>
 
