@@ -39,7 +39,7 @@ class CategoryController extends Controller
     {
         //
         $request->validate([
-            'name' => 'required|min:3|max:50',
+            'name' => 'required|max:50',
         ]);
 
         if(Auth::user()->role == 'admin'){
@@ -88,7 +88,7 @@ class CategoryController extends Controller
     {
 
         $request->validate([
-            'name' => 'required|min:3|max:50',
+            'name' => 'required|max:50',
         ]);
         
         if(Auth::user()->role == 'admin'){

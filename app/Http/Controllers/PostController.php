@@ -48,8 +48,8 @@ class PostController extends Controller
         //
 
         $request->validate([
-            'title' => 'required|min:10|max:255',
-            'text' => 'required|min:10',
+            'title' => 'required|max:255',
+            'text' => 'required',
             'user_id' => 'required',
         ]);
 
@@ -99,8 +99,8 @@ class PostController extends Controller
     {
         //
         $request->validate([
-            'title' => 'required|min:10|max:255',
-            'text' => 'required|min:10',
+            'title' => 'required|max:255',
+            'text' => 'required',
             'user_id' => 'required',
         ]);
 

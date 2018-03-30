@@ -59823,13 +59823,14 @@ var PostAdd = function (_Component) {
                             { className: 'custom-select', id: 'category', onChange: function onChange(e) {
                                     return _this4.handleInput('category_id', e);
                                 } },
-                            categories.map(function (value, index) {
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'null' }),
+                            categories ? categories.map(function (value, index) {
                                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'option',
                                     { value: value.id, key: value.id },
                                     value.name
                                 );
-                            })
+                            }) : null
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'submit', value: 'Add Post' })

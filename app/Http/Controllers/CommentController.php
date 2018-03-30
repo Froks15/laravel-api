@@ -41,7 +41,7 @@ class CommentController extends Controller
 
 
         $request->validate([
-            'text' => 'required|min:5|max:250',
+            'text' => 'required|max:250',
             'user_id' => 'required',
             'post_id' => 'required',
         ]);
@@ -92,14 +92,14 @@ class CommentController extends Controller
         //
 
         $request->validate([
-            'text' => 'required|min:5|max:250',
+            'text' => 'required|max:250',
             'user_id' => 'required',
             'post_id' => 'required',
         ]);
 
         $comment->text = $request->text;
         $comment->user_id = $request->user_id;
-        $comment->category_id = $request->category_id;
+        $comment->post_id = $request->post_id;
         $comment->save();
 
         return $comment;

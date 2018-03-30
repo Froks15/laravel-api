@@ -34,6 +34,8 @@ Route::group(['middleware' => ['auth:api']], function(){
 
   Route::get('/myProfile', 'UserController@details');
   Route::get('/users/{id}', 'UserController@show');
+  Route::delete('/users/{id}', 'UserController@destroy');
+  Route::put('/users/{id}', 'UserController@update');
   Route::get('/isAdmin', 'UserController@isAdmin');
 
   Route::resource('posts', 'PostController',

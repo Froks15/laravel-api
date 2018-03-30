@@ -43,10 +43,9 @@
     {
 
         $request->validate([
-            'name' => 'required|min:6|max:50',
+            'name' => 'required|min:5|max:50',
             'email' => 'required|min:5|email',
-            'user_id' => 'required',
-            'category_id' => 'required',
+            'password' => 'required',
         ]);
 
         $user = new User;
@@ -74,4 +73,39 @@
         $user = User::findOrFail($request->id);
         return response()->json(['user'=>$user])->header('Accept', 'application/json');
     }
+
+    public function destroy(Request $request)
+    {
+
+        $user = User::findOrFail($request->id);
+
+        if(Auth::user()->role == 'admin'){
+            $user->delete();
+            return 'deleted';
+        }else {
+            return 'not admin';
+        }
+
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|min:5|max:50',
+            'email' => 'required|min:5|email',
+        ]);
+
+        $user = User::findOrFail($request->id);
+
+        if(Auth::user()->role == 'admin'){
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->save();
+            return 'updated';
+        }else {
+            return 'not admin';
+        }
+
+    }
+    
  }

@@ -79,12 +79,13 @@ export default class PostAdd extends Component {
                     <div className='form-group'>
                                                 <label htmlFor="category">Category</label>
                                                 <select className="custom-select" id='category' onChange={(e)=>this.handleInput('category_id',e)}>
+                                                    <option value="null"></option>
                                                     {
-                                                        categories.map((value, index) => {
+                                                        categories ? categories.map((value, index) => {
                                                             return (
                                                                 <option value={value.id} key={value.id}>{value.name}</option>
                                                             )
-                                                        })
+                                                        }): null
                                                     }
                                                 </select>
                                             </div>
